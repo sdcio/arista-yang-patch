@@ -1,0 +1,44 @@
+module sdcio-acl-deviations {
+  namespace "http://sdcio.dev/yang/openconfig/acl/deviations";
+  prefix sdcio-acl-deviations;
+
+  import openconfig-inet-types {
+    prefix oc-inet;
+  }
+  import openconfig-acl {
+    prefix oc-acl;
+  }
+  import openconfig-packet-match-types {
+    prefix oc-pkt-match-types;
+  }
+  import openconfig-extensions {
+    prefix oc-ext;
+  }
+
+  organization
+    "Schema Driven Configuration";
+  contact
+    "https://github.com/sdcio";
+  description
+    "This module contains OpenConfig ACL deviations for Arista EOS. in SDCIO";
+
+  oc-ext:openconfig-version "1.0.0";
+
+  revision 2024-11-07 {
+    description
+      "Initial Release, remove oc-acl:acl-entry/oc-acl:state from ingress-acl-sets and egress-acl-sets";
+    reference
+      "1.0.0";
+  }
+  deviation "/oc-acl:acl/oc-acl:interfaces/oc-acl:interface/oc-acl:ingress-acl-sets/oc-acl:ingress-acl-set/oc-acl:acl-entries" {
+    description
+      "Per-interface ACL state is not supported in EOS";
+    deviate not-supported;
+  }
+
+  deviation "/oc-acl:acl/oc-acl:interfaces/oc-acl:interface/oc-acl:egress-acl-sets/oc-acl:egress-acl-set/oc-acl:acl-entries" {
+    description
+      "Per-interface ACL state is not supported in EOS";
+    deviate not-supported;
+  }
+}
