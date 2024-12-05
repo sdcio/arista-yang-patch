@@ -1,0 +1,68 @@
+module sdcio-intf-deviations {
+  namespace "http://sdcio.dev/yang/openconfig/interfaces/deviations";
+  prefix sdcio-intf-deviations;
+
+  import openconfig-interfaces {
+    prefix oc-if;
+  }
+  import openconfig-if-ethernet {
+    prefix oc-eth;
+  }
+  import openconfig-if-aggregate {
+    prefix oc-lag;
+  }
+  import openconfig-vlan {
+    prefix oc-vlan;
+  }
+  import openconfig-if-ip {
+    prefix oc-ip;
+  }
+  import openconfig-if-tunnel {
+    prefix oc-tunnel;
+  }
+  import openconfig-if-poe {
+    prefix oc-poe;
+  }
+  import openconfig-extensions {
+    prefix oc-ext;
+  }
+  import ietf-interfaces {
+    prefix ietf-if;
+  } 
+
+  organization
+    "Schema Driven Configuration";
+  contact
+    "https://github.com/sdcio";
+  description
+    "This module contains OpenConfig interfaces ip deviations for Arista EOS. in SDCIO";
+
+  oc-ext:openconfig-version "1.0.0";
+
+  revision 2024-12-03 {
+    description
+      "Initial Release, convert the subinterface index leafref to a value.";
+    reference
+      "1.0.0";
+  }
+
+  deviation "/oc-if:interfaces/oc-if:interface/oc-if:subinterfaces/oc-if:subinterface/oc-if:index" {
+    description "test";
+    deviate delete {
+      type leafref {
+        path "../config/index";
+      }
+    }
+    deviate add {
+      type uint32;
+      default 0;
+    }
+  }
+
+  deviation "/ietf-if:interfaces/ietf-if:interface/ietf-if:type" {
+    description "test";
+    deviate delete {
+      mandatory true;
+    }
+  }
+}
