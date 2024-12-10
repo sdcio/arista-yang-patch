@@ -26,19 +26,33 @@ module sdcio-acl-deviations {
 
   revision 2024-11-07 {
     description
-      "Initial Release, remove oc-acl:acl-entry/oc-acl:state from ingress-acl-sets and egress-acl-sets";
+      "Initial Release, modify oc-acl:acl-entry/oc-acl:sequence-id leafref in ingress-acl-sets and egress-acl-sets as it's referring to a deleted path by arista's deviations";
     reference
       "1.0.0";
   }
-  deviation "/oc-acl:acl/oc-acl:interfaces/oc-acl:interface/oc-acl:ingress-acl-sets/oc-acl:ingress-acl-set/oc-acl:acl-entries" {
+  deviation "/oc-acl:acl/oc-acl:interfaces/oc-acl:interface/oc-acl:ingress-acl-sets/oc-acl:ingress-acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:sequence-id" {
     description
       "Per-interface ACL state is not supported in EOS";
-    deviate not-supported;
+    deviate replace {
+      type leafref {
+        path "/oc-acl:acl/oc-acl:acl-sets/" +
+          "oc-acl:acl-set[oc-acl:name=current()/../../../../set-name]" +
+          "[oc-acl:type=current()/../../../../type]/" +
+          "oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:sequence-id";
+      }
+    }
   }
 
-  deviation "/oc-acl:acl/oc-acl:interfaces/oc-acl:interface/oc-acl:egress-acl-sets/oc-acl:egress-acl-set/oc-acl:acl-entries" {
+  deviation "/oc-acl:acl/oc-acl:interfaces/oc-acl:interface/oc-acl:egress-acl-sets/oc-acl:egress-acl-set/oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:sequence-id" {
     description
       "Per-interface ACL state is not supported in EOS";
-    deviate not-supported;
+    deviate replace {
+      type leafref {
+        path "/oc-acl:acl/oc-acl:acl-sets/" +
+          "oc-acl:acl-set[oc-acl:name=current()/../../../../set-name]" +
+          "[oc-acl:type=current()/../../../../type]/" +
+          "oc-acl:acl-entries/oc-acl:acl-entry/oc-acl:sequence-id";
+      }
+    }
   }
 }

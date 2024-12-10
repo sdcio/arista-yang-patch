@@ -47,7 +47,7 @@ module sdcio-intf-deviations {
   }
 
   deviation "/oc-if:interfaces/oc-if:interface/oc-if:subinterfaces/oc-if:subinterface/oc-if:index" {
-    description "test";
+    description "Arista is not 100% returning data according to model. According to model this should be a leafref and as such the ../config/index field should also be returned by the device, which it is not. Open Question: Should SDCIO reverse populate this leaf if it does not exist?";
     deviate delete {
       type leafref {
         path "../config/index";
@@ -60,7 +60,7 @@ module sdcio-intf-deviations {
   }
 
   deviation "/ietf-if:interfaces/ietf-if:interface/ietf-if:type" {
-    description "test";
+    description "Overlapping path with oc-if. Delete mandatory statement";
     deviate delete {
       mandatory true;
     }

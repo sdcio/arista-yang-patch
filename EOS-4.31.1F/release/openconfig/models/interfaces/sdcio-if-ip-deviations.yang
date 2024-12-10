@@ -26,13 +26,13 @@ module sdcio-if-ip-deviations {
   }
 
   deviation "/oc-if:interfaces/oc-if:interface/oc-if:subinterfaces/oc-if:subinterface/oc-ip:ipv4/oc-ip:neighbors/oc-ip:neighbor/oc-ip:config/oc-ip:link-layer-address" {
-    description "test";
+    description "Arista is populating dynamically learned neighbors as static configured neighbors. However the YANG model defines the link-layer-address is a mandatory statement. This deviation is required until Arista fixes the data returned from box. Impact: static arp/ND via SDCIO might not be 100% valid.";
     deviate delete {
       mandatory true;
     }
   }
   deviation "/oc-if:interfaces/oc-if:interface/oc-if:subinterfaces/oc-if:subinterface/oc-ip:ipv6/oc-ip:neighbors/oc-ip:neighbor/oc-ip:config/oc-ip:link-layer-address" {
-    description "test";
+    description "Arista is populating dynamically learned neighbors as static configured neighbors. However the YANG model defines the link-layer-address is a mandatory statement. This deviation is required until Arista fixes the data returned from box. Impact: static arp/ND via SDCIO might not be 100% valid.";
     deviate delete {
       mandatory true;
     }
