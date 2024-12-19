@@ -1,0 +1,45 @@
+module sdcio-platform-deviations {
+  namespace "http://sdcio.dev/yang/openconfig/platform/deviations";
+  prefix sdcio-platform-deviations;
+
+  import openconfig-extensions { prefix oc-ext; }
+  import openconfig-types { prefix oc-types; }
+  import openconfig-platform-pipeline-counters { prefix oc-ppc; }
+  import openconfig-platform { prefix oc-platform; }
+
+  organization
+    "Schema Driven Configuration";
+  contact
+    "https://github.com/sdcio";
+  description
+    "This module contains OpenConfig interfaces ip deviations for Arista EOS. in SDCIO";
+
+  oc-ext:openconfig-version "1.0.0";
+
+  revision 2024-12-03 {
+    description
+      "Initial Release, convert the subinterface index leafref to a value.";
+    reference
+      "1.0.0";
+  }
+
+  deviation "/oc-platform:components/oc-platform:component/oc-platform:name" {
+    description "Arista is not 100% returning data according to model. According to model this should be a leafref and as such the ../config/name field should also be returned by the device, which it is not. Open Question: Should SDCIO reverse populate this leaf if it does not exist?";
+    deviate delete {
+      type leafref {
+        path "../config/name";
+      }
+    }
+    deviate add {
+      type string;
+    }
+  }
+  deviation "/oc-platform:components/oc-platform:component/oc-platform:subcomponents/oc-platform:subcomponent/oc-platform:config/oc-platform:name" {
+    description "Arista is not 100% returning data according to model. According to model this should be a leafref and as such the ../config/name field should also be returned by the device, which it is not. Open Question: Should SDCIO reverse populate this leaf if it does not exist?";
+    deviate replace {
+      type leafref {
+        path "../../../../../component/name";
+      }
+    }
+  }
+}
